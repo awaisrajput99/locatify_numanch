@@ -58,7 +58,7 @@ class LoginFormWidget extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
                 onPressed: () {
-                  Get.offNamed("/homeScreen");
+                  Get.offNamed("/dashboard");
                 },
                 child: const Text(
                   "LOGIN",

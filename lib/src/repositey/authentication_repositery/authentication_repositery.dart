@@ -10,14 +10,19 @@ class AuthenticationRepository extends GetxController {
 
   @override
   void onReady() {
-    firebaseUser = _auth.currentUser as Rx<User?>;
+    firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setInitialScreen);
   }
 
   _setInitialScreen(User? user) {
-user == null? Get.offNamed("/welcome") : Get.offNamed("/homeScreen");
+    if (user == null) {
+      Get.offNamed("/welcome");
+    } else {
+      Get.offNamed("/homeScreen");
+    }
   }
+
 
   Future<void> createUserWithEmailAndPassword(String email, String password) async {
     try{
