@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:locatify/src/features/authentication/controllers/signup_controller.dart';
 
+import '../../controllers/phone_auth_controller.dart';
+
 class SignupFormWidget extends StatelessWidget {
   const SignupFormWidget({
     super.key,
@@ -13,6 +15,8 @@ class SignupFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PhoneAuthController phoneAuthController = Get.put(PhoneAuthController());
+
     final controller = Get.put(MdSignupController());
     final _formKey = GlobalKey<FormState>();
 
@@ -84,16 +88,14 @@ class SignupFormWidget extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                 /*       MdSignupController.instance.registerUser(
+             /*         if (_formKey.currentState!.validate()) {
+                        MdSignupController.instance.registerUser(
                             controller.email.text.trim(),
                             controller.password.text.trim(),
                         context
-                        );*/
-                        MdSignupController.instance.phoneAuthentication(controller.phone.text.trim(), context);
-                        Get.toNamed('/otpScreen');
-
-                      // }
+                        );
+                      }*/
+                      phoneAuthController.initiatePhoneAuth(controller.phone.text);
                     },
                     child: const Text(
                       "SIGNUP",

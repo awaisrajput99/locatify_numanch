@@ -98,8 +98,5 @@ class MdSignupController extends GetxController {
         .createUserWithEmailAndPassword(email, password, context);
   }
 
-  //Method to verify phone
-void phoneAuthentication(String phoneNo,BuildContext context) {
-AuthenticationRepository.instance.phoneAuthentication(phoneNo, context);
-}
+
 }

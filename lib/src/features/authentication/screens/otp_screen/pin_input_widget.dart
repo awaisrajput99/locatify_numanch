@@ -44,8 +44,7 @@ class PinInputWidget extends StatelessWidget {
         color: Colors.grey,
       ),
       onCompleted: (pin) {
-        OtpController.instance.code.value = pin;
-        OtpController.instance.verifyOtp(pin, context);
+        OtpVerificationController.instance.updateSmsCode(pin);
       },
       pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
       showCursor: true,

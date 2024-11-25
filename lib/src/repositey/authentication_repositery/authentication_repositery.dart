@@ -6,6 +6,7 @@ import 'package:locatify/src/common_widgets/toast_messages/toast_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:locatify/src/repositey/exceptions/signup_email_password_failure.dart';
 
+import '../../features/authentication/controllers/phone_auth_controller.dart';
 import '../exceptions/login_email_password_failure.dart';
 import '../exceptions/otp_verification_failure.dart';
 import '../exceptions/phone_authentication_failure.dart';
@@ -15,7 +16,7 @@ class AuthenticationRepository extends GetxController {
 
   final _auth = FirebaseAuth.instance;
   final Rx<User?> firebaseUser = Rx<User?>(null);
-  var verificationId = ''.obs;
+  var mdVerificationId = ''.obs;
 
 
   @override
@@ -97,66 +98,46 @@ class AuthenticationRepository extends GetxController {
     Get.offAllNamed("/welcome"); // Redirect to welcome screen after logout
   }
 
-  //phone verification
-  Future<void> phoneAuthentication(String phoneNo, BuildContext context) async {
+  Future<void> phoneAuthentication(String phoneNo) async {
     try {
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNo,
-        verificationCompleted: (credential) async {
-          print('Auto-verification completed');
-          await _auth.signInWithCredential(credential);
-          Get.offAllNamed('/dashboard');
+        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
+          try {
+            await _auth.signInWithCredential(phoneAuthCredential);
+            print("Phone number verified and user signed in.");
+          } catch (e) {
+            print("Error signing in with phoneAuthCredential: $e");
+          }
         },
         verificationFailed: (FirebaseAuthException e) {
-          print('Verification failed: ${e.message}');
-          final ex = PhoneAuthenticationFailure.code(e.code);
-          showFlushbar(context, ex.message); // Ensure context is valid
+          print("Phone verification failed. Error: ${e.message}");
         },
-        codeSent: (verificationId, resendToken) {
-          print('Code sent: $verificationId');
-          this.verificationId.value = verificationId;
-          Get.toNamed('/otpScreen');
+        codeSent: (String verificationId, int? forceResendingToken) {
+          PhoneAuthController.instance.setVerificationId(verificationId);
+          print("Verification code sent to $phoneNo.");
         },
-        codeAutoRetrievalTimeout: (verificationId) {
-          print('Code auto-retrieval timeout');
-          this.verificationId.value = verificationId;
+        codeAutoRetrievalTimeout: (String verificationId) {
+          print("Auto-retrieval of verification code timed out.");
         },
       );
     } catch (e) {
-      print('Unexpected error: $e');
-      const ex = PhoneAuthenticationFailure();
-      showFlushbar(context, ex.message);
-      throw ex;
+      print("Error initiating phone number verification: $e");
     }
   }
 
-
-  Future<bool> verifyOtp(String otp, BuildContext context) async {
+  Future<void> otpVerification(String verificationId, String smsCode) async {
     try {
-      // Create AuthCredential using PhoneAuthProvider
-      final credential = PhoneAuthProvider.credential(
-        verificationId: this.verificationId.value,
-        smsCode: otp,
+      final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
       );
-
-      // Sign in with the generated credential
-      final userCredential = await _auth.signInWithCredential(credential);
-
-      // Return true if the user is successfully signed in
-      return userCredential.user != null;
-    } on FirebaseAuthException catch (e) {
-      // Use OtpVerificationFailure to map Firebase error codes
-      final ex = OtpVerificationFailure.code(e.code);
-      showFlushbar(context, ex.message);
-      throw ex;
+      await _auth.signInWithCredential(credential);
+      print("User successfully signed in with the SMS code.");
     } catch (e) {
-      // Handle unexpected errors
-      const ex = OtpVerificationFailure();
-      showFlushbar(context, ex.message);
-      throw ex;
+      print("Error signing in with the SMS code: $e");
     }
   }
-
 
 
 }

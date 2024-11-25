@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:locatify/src/constants/image_strings.dart';
 import 'package:locatify/src/constants/sizes.dart';
-import 'package:locatify/src/features/authentication/controllers/otp_controller.dart';
 import 'package:locatify/src/features/authentication/screens/otp_screen/pin_input_widget.dart';
+
+import '../../controllers/otp_controller.dart';
+import '../../controllers/phone_auth_controller.dart';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final OtpVerificationController otpController = Get.put(OtpVerificationController());
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -49,9 +54,10 @@ class OtpScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: () {
-                        OtpController.instance.verifyOtp(OtpController.instance.code.value, context);
-                      },
+                      onPressed: (){
+                        final phoneAuthController = Get.find<PhoneAuthController>();
+                        otpController.verifyOtp(phoneAuthController.verificationId.value);
+                        },
                       child: const Text(
                         "NEXT",
                         style: TextStyle(fontSize: 20, fontFamily: "Roboto"),
