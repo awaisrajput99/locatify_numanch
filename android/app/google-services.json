@@ -12,7 +12,20 @@
           "package_name": "com.numan.locatify"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "574554854734-2346eiuaqct6ilk7lgfkrplv1aade00t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.numan.locatify",
+            "certificate_hash": "38480bf17139d4679b92d0dec0dc9e3cfa4cf766"
+          }
+        },
+        {
+          "client_id": "574554854734-amlpn9er7tde5qh6vojg60rks34nf9m3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDhDYctEzBq0yk3nfEEXH-FywC2MuxNh8U"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574554854734-amlpn9er7tde5qh6vojg60rks34nf9m3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "574554854734-189ddgrl9jj23nvbokke66okauj3ihqm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.numan.locatify"
+              }
+            }
+          ]
         }
       }
     }

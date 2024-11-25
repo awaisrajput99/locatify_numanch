@@ -29,26 +29,31 @@ class SignupFormWidget extends StatelessWidget {
                   prefixIcon: Icon(Icons.person_outline_outlined),
                   labelText: "Full Name",
                 ),
+                validator: controller.validateFullName,
               ),
               SizedBox(
                 height: size.height * 0.015,
               ),
               TextFormField(
                 controller: controller.email,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   labelText: "Email Address",
                 ),
+                validator: controller.validateEmail,
               ),
               SizedBox(
                 height: size.height * 0.015,
               ),
               TextFormField(
                 controller: controller.phone,
+                keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.numbers_outlined),
                   labelText: "Phone Number",
                 ),
+                validator: controller.validatePhone,
               ),
               SizedBox(
                 height: size.height * 0.015,
@@ -59,6 +64,7 @@ class SignupFormWidget extends StatelessWidget {
                   prefixIcon: Icon(Icons.fingerprint_outlined),
                   labelText: "Create Password",
                 ),
+                validator: controller.validatePassword,
               ),
               SizedBox(
                 height: size.height * 0.015,
@@ -69,6 +75,7 @@ class SignupFormWidget extends StatelessWidget {
                   prefixIcon: Icon(Icons.fingerprint_outlined),
                   labelText: "Confirm Password",
                 ),
+                validator: controller.validateConfirmPassword,
               ),
               SizedBox(
                 height: size.height * 0.03,
@@ -77,11 +84,16 @@ class SignupFormWidget extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        MdSignupController.instance.registerUser(
+                      // if (_formKey.currentState!.validate()) {
+                 /*       MdSignupController.instance.registerUser(
                             controller.email.text.trim(),
-                            controller.password.text.trim());
-                      }
+                            controller.password.text.trim(),
+                        context
+                        );*/
+                        MdSignupController.instance.phoneAuthentication(controller.phone.text.trim(), context);
+                        Get.toNamed('/otpScreen');
+
+                      // }
                     },
                     child: const Text(
                       "SIGNUP",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:locatify/src/features/authentication/controllers/otp_controller.dart';
 import 'package:pinput/pinput.dart';
 
 class PinInputWidget extends StatelessWidget {
@@ -42,7 +43,10 @@ class PinInputWidget extends StatelessWidget {
         height: 30,
         color: Colors.grey,
       ),
-      onCompleted: (pin) => print("pin is "+pin),
+      onCompleted: (pin) {
+        OtpController.instance.code.value = pin;
+        OtpController.instance.verifyOtp(pin, context);
+      },
       pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
       showCursor: true,
 

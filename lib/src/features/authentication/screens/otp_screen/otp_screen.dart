@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:locatify/src/constants/image_strings.dart';
 import 'package:locatify/src/constants/sizes.dart';
+import 'package:locatify/src/features/authentication/controllers/otp_controller.dart';
 import 'package:locatify/src/features/authentication/screens/otp_screen/pin_input_widget.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -48,7 +49,9 @@ class OtpScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        OtpController.instance.verifyOtp(OtpController.instance.code.value, context);
+                      },
                       child: const Text(
                         "NEXT",
                         style: TextStyle(fontSize: 20, fontFamily: "Roboto"),

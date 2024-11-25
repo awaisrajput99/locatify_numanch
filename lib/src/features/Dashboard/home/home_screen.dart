@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:locatify/src/constants/image_strings.dart';
 import 'package:locatify/src/constants/sizes.dart';
-import 'package:locatify/src/features/Dashboard/Dashboard_content/dropdown_widget.dart';
+import 'package:locatify/src/features/Dashboard/Dashboard_content/dropdown_widget_home_screen.dart';
 import '../controllers/dropdown_controller_homescreen.dart';
 import 'finder_seeker_selector_widget.dart';
 
@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: size.height * 0.02,
           ),
-        DropdownWidget(dropdownController: dropdownController)
+        DropdownWidgetHomeScreen(dropdownController: dropdownController)
         ],
       ),
     );

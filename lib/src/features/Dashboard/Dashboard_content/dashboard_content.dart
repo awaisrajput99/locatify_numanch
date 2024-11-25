@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:locatify/src/constants/colors.dart';
 import 'package:locatify/src/features/Dashboard/controllers/dashboard_controller.dart';
+import 'package:locatify/src/repositey/authentication_repositery/authentication_repositery.dart';
 
 class DashboardContent extends StatelessWidget {
   const DashboardContent({super.key});
@@ -13,6 +14,9 @@ class DashboardContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: IconButton(onPressed: (){
+          AuthenticationRepository.instance.logoutUser();
+        }, icon: const Icon(Icons.logout_rounded)),
         actions: [
           IconButton(
             onPressed: () => Get.toNamed('/notifications'),

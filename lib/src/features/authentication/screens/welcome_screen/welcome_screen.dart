@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:locatify/src/constants/colors.dart';
 import 'package:locatify/src/constants/image_strings.dart';
 import 'package:locatify/src/constants/sizes.dart';
 import 'package:locatify/src/constants/text_strings.dart';

@@ -2,11 +2,12 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:locatify/src/features/Dashboard/controllers/dashboard_controller.dart';
+import 'package:locatify/src/features/Dashboard/controllers/home_screen_functionality.dart';
 import '../../../constants/colors.dart';
 import '../controllers/dropdown_controller_homescreen.dart';
 
-class DropdownWidget extends StatelessWidget {
-  const DropdownWidget({super.key, required this.dropdownController});
+class DropdownWidgetHomeScreen extends StatelessWidget {
+  const DropdownWidgetHomeScreen({super.key, required this.dropdownController});
 final DropdownControllerHomeScreen dropdownController;
   @override
   Widget build(BuildContext context) {
@@ -30,18 +31,7 @@ final DropdownControllerHomeScreen dropdownController;
         onChanged: (value) {
           dropdownController.updateSelectedOption(value.toString());
           controller.changeTypeSelection(value.toString());
-          if (controller.typeSelection.value == "Person" && controller.identity.value == "finder") {
-           Get.toNamed("/personUpload");
-          }
-          else if (controller.typeSelection.value == "Document" && controller.identity.value == "finder"){
-            Get.toNamed("/documentUpload");
-          }
-          else if (controller.typeSelection.value == "Person" && controller.identity.value == "seeker"){
-            Get.toNamed("/personSearch");
-          }
-          else if (controller.typeSelection.value == "Document" && controller.identity.value == "seeker"){
-            Get.toNamed("/documentSearch");
-          }
+          HomeScreenFunctionality.goToSelectedOption(controller, context);
         },
 
         hint: const Text(

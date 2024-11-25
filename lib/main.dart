@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:locatify/firebase_options.dart';
 import 'package:locatify/src/features/Dashboard/Dashboard_content/dashboard_content.dart';
 import 'package:locatify/src/features/Dashboard/Notifications/notification_screen.dart';
 import 'package:locatify/src/features/Dashboard/finder/document_upload/document_upload_screen.dart';
@@ -16,12 +17,12 @@ import 'package:locatify/src/features/authentication/screens/otp_screen/otp_scre
 import 'package:locatify/src/features/authentication/screens/signup_screen/signup_screen.dart';
 import 'package:locatify/src/features/authentication/screens/splash_screen/splash_screen.dart';
 import 'package:locatify/src/features/authentication/screens/welcome_screen/welcome_screen.dart';
+import 'package:locatify/src/repositey/authentication_repositery/authentication_repositery.dart';
 import 'package:locatify/src/utils/theme/theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  // await Firebase.initializeApp().then((value)=> Get.put(AuthenticationRepository()));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value)=> Get.put(AuthenticationRepository()));
   runApp(const MyApp());
 }
 

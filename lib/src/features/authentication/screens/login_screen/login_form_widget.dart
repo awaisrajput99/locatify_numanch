@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:locatify/src/features/authentication/controllers/login_controller.dart';
 
 import '../forget_password/forget_password_options/forget_password_modal_bottom_sheet.dart';
 
@@ -14,6 +15,8 @@ class LoginFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    final controller = Get.put(MdLoginController());
     return Form(
         child: Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -21,6 +24,7 @@ class LoginFormWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            controller: controller.email,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.person_outline_outlined),
               labelText: "E-Mail",
@@ -31,6 +35,7 @@ class LoginFormWidget extends StatelessWidget {
             height: size.height * 0.02,
           ),
           TextFormField(
+            controller: controller.password,
             decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.fingerprint_outlined),
                 labelText: "Password",
@@ -58,7 +63,12 @@ class LoginFormWidget extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
                 onPressed: () {
-                  Get.offNamed("/dashboard");
+            MdLoginController.instance.loginUser(
+                controller.email.text.trim(),
+                controller.password.text.trim(),
+            context
+            );
+
                 },
                 child: const Text(
                   "LOGIN",
